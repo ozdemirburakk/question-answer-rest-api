@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: [true,"Please provide an email"],
     unique: [true, "Please try diffrent email"],
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -52,6 +52,12 @@ const UserSchema = new Schema({
     default: false,
   },
 });
+
+UserSchema.pre("save",function(next){
+  console.log("Pre Hooks : Save");
+  console.log(this.password);
+  next();
+})
 
 module.exports = mongoose.model("User",UserSchema);
 
