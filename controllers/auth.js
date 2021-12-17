@@ -2,7 +2,7 @@ const customErrorHandler = require("../middlewares/errors/customErrorHandler");
 const User = require("../models/User");
 const CustomError = require("../helpers/error/CustomError");
 const asyncErrorWrapper = require("express-async-handler");
-const {sendJwtToClient} = require("../helpers/authorization/tokenHelpers");
+const { sendJwtToClient } = require("../helpers/authorization/tokenHelpers");
 
 const register = asyncErrorWrapper(async (req, res, next) => {
   //POST DATA
@@ -18,14 +18,17 @@ const register = asyncErrorWrapper(async (req, res, next) => {
   sendJwtToClient(user, res);
 });
 
-const tokentest = (req, res, next) => {
+const getUser = (req, res, next) => {
   res.json({
     success: true,
-    message: "Welcome",
+    data: {
+      id: req.user.id,
+      name: req.user.name,
+    },
   });
 };
 
 module.exports = {
   register,
-  tokentest,
+  getUser,
 };
