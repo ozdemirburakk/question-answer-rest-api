@@ -60,16 +60,18 @@ UserSchema.methods.generateJwtFromUser = function () {
     id: this._id,
     name: this.name,
   };
-  const token = jwt.sign(payload,JWT_SECRET_KEY,{
-    expiresIn: JWT_EXPIRE
+  const token = jwt.sign(payload, JWT_SECRET_KEY, {
+    expiresIn: JWT_EXPIRE,
   });
   return token;
 };
 
 //Pre HOOKS
 UserSchema.pre("save", function (next) {
+
+console.log("pre");
   //parola değişmemişse
-  if (this.isModified("password")) {
+  if (!this.isModified("password")) {
     next();
   }
   bcrypt.genSalt(10, (err, salt) => {
