@@ -86,11 +86,12 @@ UserSchema.methods.getResetPasswordTokenFromUser = function () {
 
   this.resetPasswordToken = resetPasswordToken;
   this.resetPasswordExpire = Date.now() + parseInt(RESET_PASSWORD_EXPIRE);
+ 
+  return resetPasswordToken;
 };
 
 //Pre HOOKS
 UserSchema.pre("save", function (next) {
-  console.log("pre");
   //parola değişmemişse
   if (!this.isModified("password")) {
     next();
