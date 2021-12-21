@@ -5,7 +5,6 @@ const Question = require("../models/Question");
 
 const askNewQuestion = asyncErrorWrapper(async (req, res, next) => {
   const information = req.body;
-  console.log(req.user);
   const question = await Question.create({
     ...information,
     user: req.user.id,
