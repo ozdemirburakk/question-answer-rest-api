@@ -29,6 +29,9 @@ const getAccessToRoute = (req, res, next) => {
   });
 };
 
+
+const getAdminAccess= 
+
 module.exports = {
   getAccessToRoute,
 };
