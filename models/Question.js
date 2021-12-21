@@ -27,22 +27,20 @@ const QuestionSchema = new Schema({
   },
 });
 
-
 QuestionSchema.pre("save", function (next) {
-    if (!this.isModified("title")) {
-      next();
-    }
-    this.slug = this.makeSlug();
+  if (!this.isModified("title")) {
     next();
-  });
+  }
+  this.slug = this.makeSlug();
+  next();
+});
 
-  QuestionSchema.methods.makeSlug = function () {
-    return slugify(this.title, {
-      replacement: '-',  
-      remove: /[*+~.()'"!:@]/g, 
-      lower: true,      
-       
-    })
-  };
+QuestionSchema.methods.makeSlug = function () {
+  return slugify(this.title, {
+    replacement: "-",
+    remove: /[*+~.()'"!:@]/g,
+    lower: true,
+  });
+};
 
 module.exports = mongoose.model("Question", QuestionSchema);
