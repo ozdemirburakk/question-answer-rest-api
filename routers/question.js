@@ -1,9 +1,11 @@
 const express = require("express");
-const { askNewQuestion,getAllQuestions } = require("../controllers/question");
+const { askNewQuestion,getAllQuestions,getSingleQuestion } = require("../controllers/question");
 const { getAccessToRoute } = require("../middlewares/authorization/auth");
+const {checkQuestionExist} = require("../middlewares/database/databaseErrorHelpers");
 //api/questions
 const router = express.Router();
 router.get("/", getAllQuestions);
+router.get("/:id",checkQuestionExist, getSingleQuestion);
 router.post("/ask",getAccessToRoute, askNewQuestion);
 
 module.exports = router;
