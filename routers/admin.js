@@ -6,13 +6,16 @@ const {
 const {
   checkUserExist,
 } = require("../middlewares/database/databaseErrorHelpers");
-const { blockUser } = require("../controllers/admin");
+const { blockUser,deleteUser } = require("../controllers/admin");
 
-//Delete User
+
 const router = express.Router();
 router.use([getAccessToRoute, getAdminAccess]);
 
 //Block User
 router.get("/block/:id",checkUserExist, blockUser);
+
+//Delete User
+router.delete("/user/:id",checkUserExist,deleteUser);
 
 module.exports = router;

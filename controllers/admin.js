@@ -12,11 +12,26 @@ const blockUser = asyncErrorWrapper(async (req, res, next) => {
   user.blocked = !user.blocked;
 
   await user.save();
-
   return res.status(200).json({
     success: true,
     message: "Block- Unblock Successfull",
   });
 });
 
-module.exports = { blockUser };
+const deleteUser = asyncErrorWrapper(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  await user.remove();
+
+  return res.status(200).json({
+    success: true,
+    message: "Delete Operation Successful",
+  });
+});
+
+module.exports = {
+  blockUser,
+  deleteUser,
+};
