@@ -73,9 +73,14 @@ const likeQuestion = asyncErrorWrapper(async (req, res, next) => {
 
   //if liked
   if (question.likes.includes(req.user.id)) {
-    return next(new CustomError("You already liked this question", 400));
+    // return next(new CustomError("You already liked this question", 400));
+    const index = question.likes.indexOf(req.user.id);
+
+  question.likes.splice(index, 1);
+  }else{
+    question.likes.push(req.user.id);
   }
-  question.likes.push(req.user.id);
+ 
 
   await question.save();
 
