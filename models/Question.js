@@ -8,7 +8,6 @@ const QuestionSchema = new Schema({
     required: [true, "Please provide a title"],
     minlength: [10, "Please provide a title at least 10 characters"],
     unique: true,
-    //bu bir sorudur
   },
   content: {
     type: String,
