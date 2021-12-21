@@ -3,7 +3,8 @@ const {
   askNewQuestion,
   getAllQuestions,
   getSingleQuestion,
-  editQuestion
+  editQuestion,
+  deleteQuestion,
 } = require("../controllers/question");
 const {
   getAccessToRoute,
@@ -17,5 +18,14 @@ const router = express.Router();
 router.get("/", getAllQuestions);
 router.get("/:id", checkQuestionExist, getSingleQuestion);
 router.post("/ask", getAccessToRoute, askNewQuestion);
-router.put("/:id/edit",[getAccessToRoute,checkQuestionExist,getQuestionOwnerAccess],editQuestion);
+router.put(
+  "/:id/edit",
+  [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess],
+  editQuestion
+);
+router.delete(
+  "/:id/delete",
+  [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess],
+  deleteQuestion
+);
 module.exports = router;
