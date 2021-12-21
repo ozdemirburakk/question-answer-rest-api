@@ -6,7 +6,7 @@ const sendEmail = async mailOptions => {
     port: process.env.SMTP_PORT,
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMPT_PASS,
+      pass: "Brk.1214144.Ksk.-*",
     },
   });
 
