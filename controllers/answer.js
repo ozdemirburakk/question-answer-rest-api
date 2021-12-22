@@ -97,10 +97,35 @@ const deleteAnswer = asyncErrorWrapper(async (req, res, next) => {
   });
 });
 
+//like answer
+const likeAnswer = asyncErrorWrapper(async (req, res, next) => {
+  const { answer_id } = req.params;
+
+  const answer = await Answer.findById(answer_id);
+
+  //if liked
+  if (answer.likes.includes(req.user.id)) {
+    // return next(new CustomError("You already liked this question", 400));
+    const index = answer.likes.indexOf(req.user.id);
+
+    answer.likes.splice(index, 1);
+  }else{
+    answer.likes.push(req.user.id);
+  }
+ 
+
+  await answer.save();
+
+  return res.status(200).json({
+    success: true,
+    data: answer,
+  });
+});
 module.exports = {
   addNewAnswerToQuestion,
   getAllAnswersByQuestion,
   getSingleAnswer,
   editAnswer,
   deleteAnswer,
+  likeAnswer
 };

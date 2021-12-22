@@ -9,6 +9,7 @@ const {
   getSingleAnswer,
   editAnswer,
   deleteAnswer,
+  likeAnswer
 } = require("../controllers/answer");
 const {
   checkQuestionAndAnswerExist,
@@ -39,4 +40,6 @@ router.delete(
   deleteAnswer
 );
 
+//like answer
+router.get("/:answer_id/like", [checkQuestionAndAnswerExist,getAccessToRoute], likeAnswer);
 module.exports = router;
