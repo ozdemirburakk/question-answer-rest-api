@@ -24,6 +24,7 @@ const addNewAnswerToQuestion = asyncErrorWrapper(async (req, res, next) => {
   });
 });
 
+//get all answers by question
 const getAllAnswersByQuestion = asyncErrorWrapper(async (req, res, next) => {
   const { question_id } = req.params;
 
@@ -37,7 +38,48 @@ const getAllAnswersByQuestion = asyncErrorWrapper(async (req, res, next) => {
     data: answers,
   });
 });
+
+//get single answer
+const getSingleAnswer = asyncErrorWrapper(async (req, res, next) => {
+  const { answer_id } = req.params;
+
+  const answer = await Answer.findById(answer_id)
+    .populate({
+      path: "question",
+      select: "title",
+    })
+    .populate({
+      path: "user",
+      select: "name profile_image",
+    });
+
+  return res.status(200).json({
+    success: true,
+    data: answer,
+  });
+});
+
+//edit answer
+const editAnswer = asyncErrorWrapper(async (req, res, next) => {
+  const { answer_id } = req.params;
+
+  const { content } = req.body;
+
+  let answer = await Answer.findById(answer_id);
+
+  answer.content = content;
+
+  await answer.save();
+
+  return res.status(200).json({
+    success: true,
+    data: answer,
+  });
+});
+
 module.exports = {
   addNewAnswerToQuestion,
   getAllAnswersByQuestion,
+  getSingleAnswer,
+  editAnswer,
 };
