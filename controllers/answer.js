@@ -88,6 +88,7 @@ const deleteAnswer = asyncErrorWrapper(async (req, res, next) => {
   const question = await Question.findById(question_id);
 
   question.answers.splice(question.answers.indexOf(answer_id), 1);
+  question.answerCount = question.answers.length;
 
   await question.save();
 
@@ -109,10 +110,9 @@ const likeAnswer = asyncErrorWrapper(async (req, res, next) => {
     const index = answer.likes.indexOf(req.user.id);
 
     answer.likes.splice(index, 1);
-  }else{
+  } else {
     answer.likes.push(req.user.id);
   }
- 
 
   await answer.save();
 
@@ -127,5 +127,5 @@ module.exports = {
   getSingleAnswer,
   editAnswer,
   deleteAnswer,
-  likeAnswer
+  likeAnswer,
 };
